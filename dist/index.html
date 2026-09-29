@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ULPF | Universal Log Pre-processing Framework</title>
+
+<style>*{box-sizing:border-box;margin:0;padding:0}body{color:#102a43;background:#f4f8fd;font-family:Segoe UI,Arial,sans-serif}header{z-index:100;background:#fff;border-bottom:1px solid #d9e6f3;justify-content:space-between;align-items:center;height:72px;padding:0 35px;display:flex;position:sticky;top:0;box-shadow:0 4px 18px #003c7814}.logo{align-items:center;gap:12px;display:flex}.logo-icon{color:#fff;background:linear-gradient(135deg,#075ee8,#13a9ec);border-radius:12px;justify-content:center;align-items:center;width:43px;height:43px;font-size:21px;font-weight:800;display:flex}.logo-title{color:#073c80;font-size:20px;font-weight:800}.logo-sub{color:#71859c;font-size:10px}.online{color:#15945b;align-items:center;gap:8px;font-size:12px;font-weight:700;display:flex}.online-dot{background:#19c878;border-radius:50%;width:9px;height:9px;box-shadow:0 0 10px #19c878}.hero{background:linear-gradient(135deg,#fff,#edf7ff);border-bottom:1px solid #d9e7f5;padding:40px 6%}.hero-badge{color:#0866e8;background:#e8f4ff;border:1px solid #cce3f7;border-radius:20px;margin-bottom:13px;padding:7px 12px;font-size:10px;font-weight:800;display:inline-block}.hero h1{color:#082f68;margin-bottom:10px;font-size:42px}.hero h1 span{color:#0878ee}.hero p{color:#647c95;max-width:900px;font-size:14px;line-height:1.7}.container{width:92%;max-width:1500px;margin:25px auto 60px}.stats{grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:20px;display:grid}.stat{background:#fff;border:1px solid #d9e6f3;border-radius:15px;padding:19px;box-shadow:0 5px 20px #14508c0f}.stat-label{color:#71869c;text-transform:uppercase;font-size:10px;font-weight:800}.stat-value{color:#07458f;margin-top:8px;font-size:27px;font-weight:800}.green{color:#15945b}.control{background:#fff;border:1px solid #d9e6f3;border-radius:16px;margin-bottom:20px;padding:18px;box-shadow:0 5px 20px #14508c0f}.control-title{color:#154677;margin-bottom:12px;font-size:13px;font-weight:800}.buttons{flex-wrap:wrap;gap:9px;display:flex}button{cursor:pointer;border:none;font-weight:700}.btn{border-radius:9px;padding:11px 15px;font-size:11px}.primary{color:#fff;background:#0866e8}.success{color:#fff;background:#159b62}.warning{color:#fff;background:#f39b0b}.danger{color:#fff;background:#df4c5c}.light{color:#0755a8;background:#edf6ff;border:1px solid #cfe2f6}.btn:hover{transform:translateY(-2px)}.search{color:#173a60;background:#fbfdff;border:1px solid #cbddeb;border-radius:10px;outline:none;width:100%;height:45px;margin-top:15px;padding:0 15px;font-size:13px}.search:focus{border-color:#0878ee;box-shadow:0 0 0 3px #0878ee14}.format-title{color:#72869d;text-transform:uppercase;margin-top:17px;margin-bottom:9px;font-size:10px;font-weight:800}.formats{flex-wrap:wrap;gap:7px;display:flex}.format{color:#3c6080;background:#f3f8ff;border:1px solid #d4e3f2;border-radius:8px;padding:8px 13px;font-size:10px}.format.active{color:#fff;background:#0866e8;border-color:#0866e8}.pipeline{grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;display:grid}.stage{background:#fff;border:1px solid #d9e6f3;border-radius:14px;padding:17px;box-shadow:0 5px 18px #14508c0d}.stage-number{color:#0866e8;background:#e8f4ff;border-radius:50%;justify-content:center;align-items:center;width:30px;height:30px;margin-bottom:11px;font-size:10px;font-weight:800;display:flex}.stage.active{border-color:#8bc7f5}.stage.active .stage-number{color:#fff;background:#0866e8}.stage h3{color:#154777;margin-bottom:5px;font-size:11px}.stage p{color:#7c90a5;font-size:10px;line-height:1.5}.workspace{grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;display:grid}.card{background:#fff;border:1px solid #d9e6f3;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px #14508c0f}.card-header{border-bottom:1px solid #e1ebf5;justify-content:space-between;align-items:center;height:54px;padding:0 17px;display:flex}.card-header h3{color:#154777;font-size:13px}.badge{color:#0866e8;background:#e9f4ff;border-radius:7px;padding:6px 9px;font-size:9px;font-weight:800}textarea{resize:vertical;color:#24496d;background:#fbfdff;border:none;outline:none;width:100%;min-height:270px;padding:18px;font-family:Consolas,monospace;font-size:12px;line-height:1.7}.output{background:#f8fbff;min-height:270px;padding:18px;overflow:auto}.output pre{white-space:pre-wrap;color:#24496d;font-family:Consolas,monospace;font-size:12px;line-height:1.7}.events{background:#fff;border:1px solid #d9e6f3;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px #14508c0f}.events-header{border-bottom:1px solid #dfe9f3;padding:17px}.events-title{color:#154777;font-size:14px;font-weight:800}.trace{grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;display:grid}.trace-box{background:#f6faff;border:1px solid #dce9f6;border-radius:9px;padding:11px}.trace-box small{color:#7d90a5;font-size:9px}.trace-box strong{color:#0755a8;margin-top:5px;font-size:11px;display:block}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:900px}th{text-align:left;color:#526f8c;text-transform:uppercase;background:#eef6ff;padding:13px;font-size:9px}td{color:#45627e;border-top:1px solid #edf2f7;padding:13px;font-size:11px}tr:hover td{background:#f7fbff}.event-name{color:#0755a8;font-weight:800}.status{color:#128653;background:#e6f8ef;border-radius:6px;padding:5px 8px;font-size:9px;font-weight:800}.view{color:#0866e8;background:#e9f4ff;border-radius:6px;padding:6px 10px;font-size:9px}.modal{-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:500;background:#05234673;justify-content:center;align-items:center;padding:20px;display:none;position:fixed;inset:0}.modal.show{display:flex}.modal-box{background:#fff;border-radius:17px;width:100%;max-width:780px;max-height:85vh;overflow:auto;box-shadow:0 25px 80px #0028644d}.modal-head{border-bottom:1px solid #dfe8f2;justify-content:space-between;padding:17px 20px;display:flex}.modal-head h3{color:#08478f}.close{color:#0755a8;background:#edf5ff;border-radius:7px;padding:7px 10px}.modal-content{padding:20px}.modal-content pre{white-space:pre-wrap;color:#23496d;background:#f5f9fd;border:1px solid #dce8f4;border-radius:10px;padding:16px;font-family:Consolas,monospace;font-size:12px}.toast{color:#fff;z-index:800;background:#073f89;border-radius:10px;padding:13px 18px;font-size:12px;font-weight:700;display:none;position:fixed;bottom:25px;right:25px}.toast.show{display:block}@media (width<=1100px){.stats,.pipeline{grid-template-columns:repeat(3,1fr)}}@media (width<=800px){.workspace{grid-template-columns:1fr}.pipeline,.trace{grid-template-columns:repeat(2,1fr)}}@media (width<=550px){.stats,.pipeline,.trace{grid-template-columns:1fr}.hero h1{font-size:30px}.system-status{display:none}}</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            U
+        </div>
+
+        <div>
+
+            <div class="logo-title">
+                ULPF
+            </div>
+
+            <div class="logo-sub">
+                Universal Log Pre-processing Framework
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="online">
+
+        <span class="online-dot"></span>
+
+        SYSTEM ONLINE
+
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-badge">
+        ● REAL-TIME LOG PROCESSING
+    </div>
+
+    <h1>
+        Universal
+        <span>Log Pre-processing</span>
+        Framework
+    </h1>
+
+    <p>
+        Ingest heterogeneous logs, parse vendor-specific formats,
+        normalize security events into a universal schema,
+        preserve complete traceability and prepare
+        analytics-ready data for SIEM and AI/ML systems.
+    </p>
+
+</section>
+
+
+<main class="container">
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Events Ingested
+        </div>
+
+        <div
+            class="stat-value"
+            id="ingested">
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Events Normalized
+        </div>
+
+        <div
+            class="stat-value"
+            id="normalized">
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Formats Detected
+        </div>
+
+        <div
+            class="stat-value"
+            id="formats">
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Processing Success
+        </div>
+
+        <div class="stat-value green">
+            100%
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Data Loss
+        </div>
+
+        <div class="stat-value green">
+            0%
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTROL -->
+
+<section class="control">
+
+    <div class="control-title">
+        Real-Time Processing Controls
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="btn primary"
+            onclick="generateLog()">
+            ⚡ Generate Log
+        </button>
+
+
+        <button
+            class="btn success"
+            onclick="startStream()">
+            ▶ Start Live Stream
+        </button>
+
+
+        <button
+            class="btn warning"
+            onclick="pauseStream()">
+            ⏸ Pause
+        </button>
+
+
+        <button
+            class="btn danger"
+            onclick="clearEvents()">
+            🗑 Clear Events
+        </button>
+
+
+        <button
+            class="btn light"
+            onclick="exportJSON()">
+            ↓ Export JSON
+        </button>
+
+    </div>
+
+
+    <input
+        id="search"
+        class="search"
+        type="text"
+        placeholder="🔎 Search Events — Authentication Failure, Firewall Deny, Network Intrusion, Malware Detection"
+        oninput="renderTable()">
+
+
+    <div class="format-title">
+        Input Format
+    </div>
+
+
+    <div class="formats">
+
+        <button
+            class="format active"
+            onclick="selectFormat(this,'AUTO')">
+            AUTO
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'SYSLOG')">
+            SYSLOG
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'JSON')">
+            JSON
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'CEF')">
+            CEF
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'LEEF')">
+            LEEF
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'XML')">
+            XML
+        </button>
+
+        <button
+            class="format"
+            onclick="selectFormat(this,'CSV')">
+            CSV
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PIPELINE -->
+
+<section class="pipeline">
+
+    <div class="stage active">
+
+        <div class="stage-number">
+            01
+        </div>
+
+        <h3>
+            LOG INGESTION
+        </h3>
+
+        <p>
+            Collect logs from different sources.
+        </p>
+
+    </div>
+
+
+    <div class="stage active">
+
+        <div class="stage-number">
+            02
+        </div>
+
+        <h3>
+            PARSER ENGINE
+        </h3>
+
+        <p>
+            Detect formats and extract fields.
+        </p>
+
+    </div>
+
+
+    <div class="stage active">
+
+        <div class="stage-number">
+            03
+        </div>
+
+        <h3>
+            NORMALISATION
+        </h3>
+
+        <p>
+            Map vendor fields to universal schema.
+        </p>
+
+    </div>
+
+
+    <div class="stage active">
+
+        <div class="stage-number">
+            04
+        </div>
+
+        <h3>
+            TRACEABILITY
+        </h3>
+
+        <p>
+            Maintain raw-to-normalized lineage.
+        </p>
+
+    </div>
+
+
+    <div class="stage active">
+
+        <div class="stage-number">
+            05
+        </div>
+
+        <h3>
+            ANALYTICS READY
+        </h3>
+
+        <p>
+            Prepare data for SIEM and AI/ML.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WORKSPACE -->
+
+<section class="workspace">
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h3>
+                Raw Log Generator
+            </h3>
+
+            <span
+                class="badge"
+                id="formatBadge">
+                AUTO
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="rawLog"
+            placeholder="Generated raw log will appear here..."
+            spellcheck="false"></textarea>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h3>
+                Universal Standardized Event
+            </h3>
+
+            <span class="badge">
+                NORMALIZED
+            </span>
+
+        </div>
+
+
+        <div
+            id="output"
+            class="output">
+
+            <pre>
+Generate a log to view normalized output...
+            </pre>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EVENTS -->
+
+<section class="events">
+
+    <div class="events-header">
+
+        <div class="events-title">
+            ⚡ Real-Time Event Stream
+        </div>
+
+
+        <div class="trace">
+
+            <div class="trace-box">
+
+                <small>
+                    RAW EVENT
+                </small>
+
+                <strong id="rawTrace">
+                    RAW-000000
+                </strong>
+
+            </div>
+
+
+            <div class="trace-box">
+
+                <small>
+                    PARSER
+                </small>
+
+                <strong id="parserTrace">
+                    PARSER-000000
+                </strong>
+
+            </div>
+
+
+            <div class="trace-box">
+
+                <small>
+                    NORMALISATION
+                </small>
+
+                <strong id="normTrace">
+                    NORM-000000
+                </strong>
+
+            </div>
+
+
+            <div class="trace-box">
+
+                <small>
+                    ANALYTICS
+                </small>
+
+                <strong id="analyticsTrace">
+                    ANALYTICS-000000
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Time</th>
+                    <th>Event Type</th>
+                    <th>Format</th>
+                    <th>Trace ID</th>
+                    <th>Source IP</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                    <th>View</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="eventTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h3>
+                Event Details
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="modal-content">
+
+            <pre id="modalData"></pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+<script>
+
+/* ================================
+   DATA
+================================ */
+
+let events = [];
+
+let counter = 0;
+
+let selectedFormat = "AUTO";
+
+let streamTimer = null;
+
+
+const eventTypes = [
+
+    {
+        name:"Authentication Failure",
+        category:"AUTHENTICATION",
+        action:"DENY"
+    },
+
+    {
+        name:"Firewall Deny",
+        category:"NETWORK",
+        action:"DENY"
+    },
+
+    {
+        name:"Network Intrusion",
+        category:"INTRUSION",
+        action:"BLOCK"
+    },
+
+    {
+        name:"Malware Detection",
+        category:"MALWARE",
+        action:"BLOCK"
+    }
+
+];
+
+
+const formats = [
+    "SYSLOG",
+    "JSON",
+    "CEF",
+    "LEEF",
+    "XML",
+    "CSV"
+];
+
+
+const sourceIPs = [
+    "192.168.1.20",
+    "192.168.1.45",
+    "10.10.20.55",
+    "172.16.4.12"
+];
+
+
+const destinationIPs = [
+    "8.8.8.8",
+    "10.0.0.1",
+    "172.217.160.46",
+    "192.168.1.1"
+];
+
+
+/* ================================
+   RANDOM
+================================ */
+
+function randomItem(array){
+
+    return array[
+        Math.floor(
+            Math.random()*array.length
+        )
+    ];
+
+}
+
+
+/* ================================
+   CREATE EVENT
+================================ */
+
+function createEvent(){
+
+    counter++;
+
+
+    const type =
+        eventTypes[
+            (counter-1) %
+            eventTypes.length
+        ];
+
+
+    const format =
+        selectedFormat === "AUTO"
+        ? formats[
+            (counter-1) %
+            formats.length
+          ]
+        : selectedFormat;
+
+
+    const sourceIP =
+        randomItem(sourceIPs);
+
+
+    const destinationIP =
+        randomItem(destinationIPs);
+
+
+    const sourcePort =
+        Math.floor(
+            Math.random()*40000
+        ) + 1000;
+
+
+    const destinationPort =
+        [22,53,80,443,8080][
+            Math.floor(
+                Math.random()*5
+            )
+        ];
+
+
+    const rawTrace =
+        "RAW-" +
+        String(counter).padStart(6,"0");
+
+
+    const parserTrace =
+        "PARSER-" +
+        String(counter).padStart(6,"0");
+
+
+    const normTrace =
+        "NORM-" +
+        String(counter).padStart(6,"0");
+
+
+    const analyticsTrace =
+        "ANALYTICS-" +
+        String(counter).padStart(6,"0");
+
+
+    let raw = "";
+
+
+    if(format === "SYSLOG"){
+
+        raw =
+            `<134> Sep 28 18:10:21 firewall01 ` +
+            `event="${type.name}" ` +
+            `srcip=${sourceIP} ` +
+            `dstip=${destinationIP} ` +
+            `srcport=${sourcePort} ` +
+            `dstport=${destinationPort} ` +
+            `action=${type.action} ` +
+            `proto=TCP`;
+
+    }
+
+
+    else if(format === "JSON"){
+
+        raw =
+            JSON.stringify({
+
+                event_type:type.name,
+
+                category:type.category,
+
+                srcip:sourceIP,
+
+                dstip:destinationIP,
+
+                srcport:sourcePort,
+
+                dstport:destinationPort,
+
+                action:type.action,
+
+                protocol:"TCP"
+
+            },null,2);
+
+    }
+
+
+    else if(format === "CEF"){
+
+        raw =
+            `CEF:0|ULPF|SecurityDevice|1.0|100|` +
+            `${type.name}|8|` +
+            `src=${sourceIP} ` +
+            `dst=${destinationIP} ` +
+            `spt=${sourcePort} ` +
+            `dpt=${destinationPort} ` +
+            `act=${type.action} ` +
+            `proto=TCP`;
+
+    }
+
+
+    else if(format === "LEEF"){
+
+        raw =
+            `LEEF:2.0|ULPF|SecurityDevice|1.0|100|` +
+            `event=${type.name}\t` +
+            `src=${sourceIP}\t` +
+            `dst=${destinationIP}\t` +
+            `srcPort=${sourcePort}\t` +
+            `dstPort=${destinationPort}\t` +
+            `action=${type.action}\t` +
+            `proto=TCP`;
+
+    }
+
+
+    else if(format === "XML"){
+
+        raw =
+`<event>
+    <event_type>${type.name}</event_type>
+    <category>${type.category}</category>
+    <srcip>${sourceIP}</srcip>
+    <dstip>${destinationIP}</dstip>
+    <srcport>${sourcePort}</srcport>
+    <dstport>${destinationPort}</dstport>
+    <action>${type.action}</action>
+    <protocol>TCP</protocol>
+</event>`;
+
+    }
+
+
+    else if(format === "CSV"){
+
+        raw =
+`event_type,category,srcip,dstip,srcport,dstport,action,protocol
+${type.name},${type.category},${sourceIP},${destinationIP},${sourcePort},${destinationPort},${type.action},TCP`;
+
+    }
+
+
+    const normalized = {
+
+        "@timestamp":
+            new Date().toISOString(),
+
+        "event.type":
+            type.name,
+
+        "event.category":
+            type.category,
+
+        "event.action":
+            type.action,
+
+        "source.ip":
+            sourceIP,
+
+        "destination.ip":
+            destinationIP,
+
+        "source.port":
+            sourcePort,
+
+        "destination.port":
+            destinationPort,
+
+        "network.protocol":
+            "TCP",
+
+        "log.format":
+            format,
+
+        "trace.raw":
+            rawTrace,
+
+        "trace.parser":
+            parserTrace,
+
+        "trace.normalization":
+            normTrace,
+
+        "trace.analytics":
+            analyticsTrace,
+
+        "data.loss":
+            "0%"
+
+    };
+
+
+    return {
+
+        id:counter,
+
+        time:new Date()
+            .toLocaleTimeString(),
+
+        eventType:type.name,
+
+        category:type.category,
+
+        format:format,
+
+        sourceIP:sourceIP,
+
+        destinationIP:destinationIP,
+
+        action:type.action,
+
+        raw:raw,
+
+        normalized:normalized,
+
+        trace:{
+
+            raw:rawTrace,
+
+            parser:parserTrace,
+
+            norm:normTrace,
+
+            analytics:analyticsTrace
+
+        }
+
+    };
+
+}
+
+
+/* ================================
+   GENERATE
+================================ */
+
+function generateLog(){
+
+    const event =
+        createEvent();
+
+
+    events.unshift(event);
+
+
+    document.getElementById(
+        "rawLog"
+    ).value =
+        event.raw;
+
+
+    document.getElementById(
+        "output"
+    ).innerHTML =
+        "<pre>" +
+        escapeHTML(
+            JSON.stringify(
+                event.normalized,
+                null,
+                2
+            )
+        ) +
+        "</pre>";
+
+
+    updateStats();
+
+    updateTrace(event);
+
+    renderTable();
+
+    showToast(
+        event.eventType +
+        " processed successfully"
+    );
+
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+function renderTable(){
+
+    const table =
+        document.getElementById(
+            "eventTable"
+        );
+
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        events.filter(function(event){
+
+            const text =
+                (
+                    event.eventType +
+                    " " +
+                    event.category +
+                    " " +
+                    event.format +
+                    " " +
+                    event.sourceIP +
+                    " " +
+                    event.action +
+                    " " +
+                    event.trace.raw
+                ).toLowerCase();
+
+
+            return text.includes(search);
+
+        });
+
+
+    table.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML =
+            `
+            <tr>
+                <td colspan="8"
+                    style="
+                    text-align:center;
+                    padding:35px;
+                    color:#8092a7;">
+                    No matching events found
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    filtered
+        .slice(0,30)
+        .forEach(function(event){
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${event.time}
+                </td>
+
+                <td>
+                    <span class="event-name">
+                        ${escapeHTML(
+                            event.eventType
+                        )}
+                    </span>
+                </td>
+
+                <td>
+                    ${event.format}
+                </td>
+
+                <td>
+                    ${event.trace.raw}
+                </td>
+
+                <td>
+                    ${event.sourceIP}
+                </td>
+
+                <td>
+                    ${event.action}
+                </td>
+
+                <td>
+                    <span class="status">
+                        NORMALIZED
+                    </span>
+                </td>
+
+                <td>
+                    <button
+                        class="view"
+                        onclick="viewEvent(${event.id})">
+                        VIEW
+                    </button>
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        });
+
+}
+
+
+/* ================================
+   STATS
+================================ */
+
+function updateStats(){
+
+    document.getElementById(
+        "ingested"
+    ).textContent =
+        events.length;
+
+
+    document.getElementById(
+        "normalized"
+    ).textContent =
+        events.length;
+
+
+    const unique =
+        new Set(
+            events.map(
+                event => event.format
+            )
+        );
+
+
+    document.getElementById(
+        "formats"
+    ).textContent =
+        unique.size;
+
+}
+
+
+/* ================================
+   TRACE
+================================ */
+
+function updateTrace(event){
+
+    document.getElementById(
+        "rawTrace"
+    ).textContent =
+        event.trace.raw;
+
+
+    document.getElementById(
+        "parserTrace"
+    ).textContent =
+        event.trace.parser;
+
+
+    document.getElementById(
+        "normTrace"
+    ).textContent =
+        event.trace.norm;
+
+
+    document.getElementById(
+        "analyticsTrace"
+    ).textContent =
+        event.trace.analytics;
+
+}
+
+
+/* ================================
+   FORMAT
+================================ */
+
+function selectFormat(
+    button,
+    format
+){
+
+    selectedFormat =
+        format;
+
+
+    document
+        .querySelectorAll(".format")
+        .forEach(function(item){
+
+            item.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document.getElementById(
+        "formatBadge"
+    ).textContent =
+        format;
+
+
+    showToast(
+        "Input format: " +
+        format
+    );
+
+}
+
+
+/* ================================
+   LIVE STREAM
+================================ */
+
+function startStream(){
+
+    if(streamTimer !== null){
+
+        showToast(
+            "Live stream already running"
+        );
+
+        return;
+
+    }
+
+
+    generateLog();
+
+
+    streamTimer =
+        setInterval(
+            function(){
+
+                generateLog();
+
+            },
+            3000
+        );
+
+
+    showToast(
+        "Live stream started"
+    );
+
+}
+
+
+function pauseStream(){
+
+    if(streamTimer === null){
+
+        showToast(
+            "Live stream already paused"
+        );
+
+        return;
+
+    }
+
+
+    clearInterval(
+        streamTimer
+    );
+
+
+    streamTimer = null;
+
+
+    showToast(
+        "Live stream paused"
+    );
+
+}
+
+
+/* ================================
+   CLEAR
+================================ */
+
+function clearEvents(){
+
+    events = [];
+
+    counter = 0;
+
+
+    if(streamTimer !== null){
+
+        clearInterval(
+            streamTimer
+        );
+
+        streamTimer = null;
+
+    }
+
+
+    document.getElementById(
+        "eventTable"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "rawLog"
+    ).value = "";
+
+
+    document.getElementById(
+        "output"
+    ).innerHTML =
+        "<pre>Generate a log to view normalized output...</pre>";
+
+
+    document.getElementById(
+        "rawTrace"
+    ).textContent =
+        "RAW-000000";
+
+
+    document.getElementById(
+        "parserTrace"
+    ).textContent =
+        "PARSER-000000";
+
+
+    document.getElementById(
+        "normTrace"
+    ).textContent =
+        "NORM-000000";
+
+
+    document.getElementById(
+        "analyticsTrace"
+    ).textContent =
+        "ANALYTICS-000000";
+
+
+    updateStats();
+
+
+    showToast(
+        "All events cleared"
+    );
+
+}
+
+
+/* ================================
+   VIEW
+================================ */
+
+function viewEvent(id){
+
+    const event =
+        events.find(
+            item => item.id === id
+        );
+
+
+    if(!event){
+        return;
+    }
+
+
+    document.getElementById(
+        "modalData"
+    ).textContent =
+        JSON.stringify(
+            event,
+            null,
+            2
+        );
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* ================================
+   EXPORT
+================================ */
+
+function exportJSON(){
+
+    if(events.length === 0){
+
+        showToast(
+            "No events available"
+        );
+
+        return;
+
+    }
+
+
+    const data =
+        JSON.stringify(
+            events,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href = url;
+
+    link.download =
+        "ULPF_Events.json";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showToast(
+        "JSON exported successfully"
+    );
+
+}
+
+
+/* ================================
+   TOAST
+================================ */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.toastTimer
+    );
+
+
+    window.toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* ================================
+   ESCAPE HTML
+================================ */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ================================
+   START WITH 4 DEMO EVENTS
+================================ */
+
+window.onload =
+    function(){
+
+        generateLog();
+        generateLog();
+        generateLog();
+        generateLog();
+
+    };
+
+</script>
+
+</body>
+</html>
